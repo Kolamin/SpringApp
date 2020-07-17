@@ -4,6 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Configuration
 @PropertySource("classpath:musicPlayer.properties")
 public class SpringConfig {
@@ -18,13 +21,24 @@ public class SpringConfig {
     }
 
     @Bean
-    public MusicPlayer musicPlayer(){
-        return new MusicPlayer(rockMusic(), classicalMusic());
+    public MusicPlayer musicPlayer() {
+        return new MusicPlayer(musicList());
     }
 
     @Bean
     public Computer computer(){
         return new Computer(musicPlayer());
+    }
+
+    @Bean
+    public JazzMusic jazzMusic(){
+        return new JazzMusic();
+    }
+
+    @Bean
+    public List<Music> musicList() {
+        // Этот лист неизменяемый (immutable)
+        return Arrays.asList(classicalMusic(), rockMusic(), jazzMusic());
     }
 
 }
